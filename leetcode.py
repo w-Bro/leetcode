@@ -1,5 +1,8 @@
 
 class Solution(object):
+    """
+    1. 数之和
+    """
     def twoSum(self, nums, target):
         """
         :type nums: List[int]
@@ -11,7 +14,10 @@ class Solution(object):
             for index2, j in enumerate(nums):
                 if i + j == target and index1 != index2:
                     return [index1, index2]
-
+    
+    """
+    7. 整数反转
+    """
     def reverse(self, x):
         """
         :type x: int
@@ -21,7 +27,10 @@ class Solution(object):
         if x >= 2 ** 31 or x < -1 * (2 ** 31):
             x = 0
         return x
-
+    
+    """
+    9. 回文数
+    """
     def isPalindrome(self, x):
         """
         :type x: int
@@ -29,6 +38,9 @@ class Solution(object):
         """
         return str(x) == str(x)[::-1]
 
+    """
+    13. 罗马数字转整数
+    """
     def romanToInt(self, s):
         """
         :type s: str
@@ -63,7 +75,10 @@ class Solution(object):
                     sum += roman_normal[roman]
                     s = s.replace(roman, '', 1)
         return sum
-
+    
+    """
+    14. 最长公共前缀
+    """
     def longestCommonPrefix(self, strs):
         """
         :type strs: List[str]
@@ -82,7 +97,10 @@ class Solution(object):
             if flag:
                 return shortest_str
         return shortest_str
-
+    
+    """
+    20. 有效的括号
+    """
     def isValid(self, s):
         """
         :type s: str
@@ -108,7 +126,113 @@ class Solution(object):
             return True
         return False
     
+    """
+    21. 合并两个有序链表, 注意给了ListNode的定义
+    # Definition for singly-linked list.
+    # class ListNode(object):
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    """
+
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        pass
     
+    """
+    26. 删除排序数组中的重复项
+    """
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        j = 1
+        for num in nums:
+            if num != nums[j-1]:
+                nums[j] = num
+                j += 1
+                
+        return j
+    
+    """
+    27. 移除元素
+    """
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        j = 0
+        for num in nums:
+            if num != val:
+                nums[j] = num
+                j += 1
+                
+        return j
+    
+    """
+    28. 实现strStr()
+    """
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        return haystack.find(needle) if needle != '' else 0
+    
+    """
+    35. 搜索插入位置
+    """
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        if target in nums:
+            return nums.index(target)
+        else:
+            nums.append(target)
+            nums.sort()
+            return nums.index(target)
+    
+    """
+    38. 报数
+    """
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        result = ['1', '11', '21', '1211', '111221']
+        if n < 6:
+            return result[n-1]
+        for index in range(5, n):
+            _str = result[index-1]
+            result_str = ''
+            count = 0
+            last_index = 0
+            for i in range(1, len(_str)):
+                if _str[i] != _str[i-1]:
+                    count = i - last_index
+                    result_str += str(count) + _str[i-1]
+                    last_index = i
+            result_str += str(len(_str)-last_index) + _str[-1]
+                
+            result.append(result_str)
+            
+        return result[-1]
+
+
 if __name__ == '__main__':
     solution = Solution()
     # print(solution.twoSum([2, 7, 11, 15], 9))
@@ -116,4 +240,10 @@ if __name__ == '__main__':
     # print(solution.isPalindrome(121))
     # print(solution.romanToInt('MCMXCIV'))
     # print(solution.longestCommonPrefix(["abab","aba","abc"]))
-    print(solution.isValid('(('))
+    # print(solution.isValid('(('))
+    # print(solution.mergeTwoLists([1, 2, 4], []))
+    # print(solution.removeDuplicates([0, 0, 1, 1, 1, 2, 2, 4]))
+    # print(solution.removeElement([0, 1, 2, 4], 2))
+    # print(solution.strStr('aaa', 'bl'))
+    # print(solution.searchInsert([1, 3], 2))
+    print(solution.countAndSay(5))

@@ -232,7 +232,117 @@ class Solution(object):
             
         return result[-1]
 
+    """
+    53. 最大子序和
+    """
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # 要为小于0的数，保证只有一个数时不会比这个数大
+        sum = -1
+        result = nums[0]
+        for num in nums:
+            # 一遍循环的原因是如果sum<0，加上num之后必定小于num，故会从当前的num开始计算
+            sum = max(num, sum+num)
+            print(sum)
+            result = max(result, sum)
+        return result
+    
+    """
+    58. 最后一个单词的长度
+    """
 
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        return len(s.strip().split(' ')[-1])
+    
+    """
+    66. 加一
+    """
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        i = len(digits)-1
+        num = 0
+        for digit in digits:
+            num += digit * (10 ** i)
+            i -= 1
+        num += 1
+        result = []
+        while num > 0:
+            result.append(num % 10)
+            num = num // 10
+        result.reverse()
+        return result
+    
+    """
+    67. 二进制求和
+    """
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        if len(a) < len(b):
+            a, b = b, a
+        l = len(a)
+        b = '0' * (l - len(b)) + b
+        result = [0]
+        for i in range(l):
+            result[i] += int(a[- i - 1]) + int(b[- i - 1])
+            if result[i] >= 2:
+                result[i] -= 2
+                result.append(1)
+            else:
+                result.append(0)
+        
+        if result[l] == 0:
+            result.pop()
+            
+        result.reverse()
+        return ''.join(list(map(lambda x: str(x), result)))
+    
+    """
+    69. x 的平方根
+    """
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        i, j = 0, x // 2 + 1
+        while i <= j:
+            mid = (i + j) // 2
+            if mid ** 2 == x:
+                return mid
+            if mid ** 2 > x:
+                j = mid - 1
+            else:
+                i = mid + 1
+        return j
+    
+    """
+    70. 爬楼梯
+    """
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [1, 2, ]
+        for i in range(2, n):
+            dp.append(dp[i-1] + dp[i-2])
+        return dp[n-1]
+    
+        
 if __name__ == '__main__':
     solution = Solution()
     # print(solution.twoSum([2, 7, 11, 15], 9))
@@ -246,4 +356,12 @@ if __name__ == '__main__':
     # print(solution.removeElement([0, 1, 2, 4], 2))
     # print(solution.strStr('aaa', 'bl'))
     # print(solution.searchInsert([1, 3], 2))
-    print(solution.countAndSay(5))
+    # print(solution.countAndSay(5))
+    # print(solution.maxSubArray([2, 1, -3, 4, -1, 2, 1, -5, 4]))
+    # print('=' * 20)
+    # print(solution.maxSubArray([212]))
+    # print(solution.lengthOfLastWord(" hello  "))
+    # print(solution.plusOne([0, ]))
+    # print(solution.addBinary('11', '10'))
+    # print(solution.mySqrt(2147395599))
+    print(solution.climbStairs(5))
